@@ -1,26 +1,18 @@
 import matplotlib.pyplot as plt
 
 
-count_process = [1, 16, 24]
+count_elements = [32, 64, 128]
 
-omp_static = [5.327, 4.847, 4.973]
-omp_dynamic = [5.677, 6.249, 6.741]
-omp_guided = [5.421, 4.161, 4.651]
+CUDA = [0.000337, 0.000341, 0.000267]
+single_thread = [0.000173, 0.001222, 0.010611]
 
-mpi_multiply = [25.673, 9.703, 11.311]
-mpi_not_multiply = [26.346, 9.245, 11.911]
 
-omp_static_acceleration = [1, omp_static[0]/omp_static[1], omp_static[0]/omp_static[2]]
-omp_dynamic_acceleration = [1, omp_dynamic[0]/omp_dynamic[1], omp_dynamic[0]/omp_dynamic[2]]
-omp_guided_acceleration = [1, omp_guided[0]/omp_guided[1], omp_guided[0]/omp_guided[2]]
+acceleration = [single_thread[0] / CUDA[0], single_thread[1] / CUDA[1], single_thread[2] / CUDA[2]]
 
-mpi_multiply_acceleration = [1, mpi_multiply[0]/mpi_multiply[1], mpi_multiply[0]/mpi_multiply[2]]
-mpi_not_multiply_acceleration = [1, mpi_not_multiply[0]/mpi_not_multiply[1], mpi_not_multiply[0]/mpi_not_multiply[2]]
 
-plt.plot(count_process, mpi_multiply_acceleration, label="mpi_multiply_acceleration", color='orange')
-plt.plot(count_process, mpi_not_multiply_acceleration, label="mpi_not_multiply_acceleration", color='green')
+plt.plot(count_elements, acceleration, label="acceleration", color='orange')
 plt.grid()
 plt.legend()
-plt.xlabel("Количество процессов", size=15)
-plt.ylabel('Коэффициент изменения скорости', size=15)
+plt.xlabel("Размерность матрицы NxN", size=15)
+plt.ylabel('Отношение времени посл. алгорита к времени CUBLAS', size=15)
 plt.show()
